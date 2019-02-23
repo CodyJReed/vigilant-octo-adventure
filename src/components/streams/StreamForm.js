@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
 
-import { fetchStream, editStream } from "../../actions";
-
-class StreamEdit extends Component {
-  componentDidMount() {
-    this.props.fetchStream(this.props.match.params.id);
-  }
-
+class StreamForm extends Component {
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -31,35 +24,26 @@ class StreamEdit extends Component {
   };
 
   onSubmit = formValues => {
-    this.props.editStream(formValues);
+    this.props.onSubmit(formValues);
   };
 
   render() {
-    if (!this.props.stream) {
-      return <div>Loading...</div>;
-    }
     return (
       <form
         className="ui form error"
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
-        <Field name="title" component={this.renderField} label="Title" />
+        <Field name="title" component={this.renderField} label="Enter Title" />
         <Field
           name="description"
           component={this.renderField}
-          label="Description"
+          label="Enter Description"
         />
         <button className="ui button primary">Submit</button>
       </form>
     );
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    stream: state.streams[ownProps.match.params.id]
-  };
-};
 
 const validate = formValues => {
   const errors = {};
@@ -73,12 +57,7 @@ const validate = formValues => {
   return errors;
 };
 
-const formWrapped = reduxForm({
-  form: "StreamEdit",
+export default reduxForm({
+  form: "streamForm",
   validate
-})(StreamEdit);
-
-export default connect(
-  mapStateToProps,
-  { editStream, fetchStream }
-)(formWrapped);
+})(StreamForm);
