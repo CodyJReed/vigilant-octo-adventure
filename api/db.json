@@ -1,8 +1,9 @@
 {
   "streams": [
     {
-      "title": "Changed Data",
-      "description": "Test successful",
+      "title": "My Stream",
+      "description": "This is a great stream.",
+      "userId": "114181883077013217548",
       "id": 1
     }
   ]
